@@ -26,7 +26,7 @@ public class BatAlgorithm {
 	private final int D = 10;
 	private final Random rand = new Random();
 
-	public BA(int N, int MAX, double A_MIN, double A_MAX, double R_MIN, double R_MAX){
+	public BatAlgorithm(int N, int MAX, double A_MIN, double A_MAX, double R_MIN, double R_MAX){
 		this.N = N;
 		this.MAX = MAX;
 		this.R_MAX = R_MAX;
@@ -92,7 +92,21 @@ public class BatAlgorithm {
 
 	private double[] simpleBounds(double[] Xi){
 		// Don't know if this should be implemented
-		return Xi;
+		double[] Xi_temp = new double[D];
+		System.arraycopy(Xi, 0, Xi_temp, 0, D);
+
+		for ( int i = 0; i < D; i++ ){
+			if ( Xi_temp[i] < lb[0][i] )
+				Xi_temp[i] = lb[0][i];
+			else continue;
+		}
+
+		for ( int i = 0; i < D; i++ ){
+			if ( Xi_temp[i] > ub[0][i] )
+				Xi_temp[i] = lb[0][i];
+			else continue;
+		}
+		return Xi_temp;
 	}
 
 	private void startBat(){
@@ -147,6 +161,6 @@ public class BatAlgorithm {
 	}
 
 	public static void main(String[] args) {
-		new BA(20, 1000, 0.0, 1.0, 0.0, 1.0).startBat();
+		new BatAlgorithm(20, 1000, 0.0, 1.0, 0.0, 1.0).startBat();
 	}
 }
